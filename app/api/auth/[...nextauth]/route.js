@@ -30,16 +30,20 @@ const handler = NextAuth({
     ],
     secret: process.env.NEXTAUTH_SECRET,
     // use this callback to async render full the information of the user
-  callbacks: {
-    async session({session}) {
-      const mongodbUser = await User.findOne({ email: session.user.email })
-      session.user.id = mongodbUser._id.toString()
-
-      session.user = {...session.user, ...mongodbUser._doc}
-
-      return session
-    }
-  }
+    callbacks: {
+      async session({ session }) {
+        try {
+          const mongodbUser = await User.findOne({ email: session.user.email });
+          session.user.id = mongodbUser._id.toString();
+          session.user = { ...session.user, ...mongodbUser._doc };
+  
+          return session;
+        } catch (error) {
+          console.error('Error during session callback:', error);
+          return session; // Fallback to return session as is
+        }
+      },
+    },
 });
 
 
