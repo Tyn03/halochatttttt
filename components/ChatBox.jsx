@@ -13,7 +13,7 @@ const ChatBox = ({ chat, currentUser, currentChatId }) => {
                 {chat?.isGroup ? (
                     <img src={chat?.groupPhoto || "/assets/group.png"} alt="group-photo" className='profilePhoto' />
                 ) : (
-                    <img src={otherMember[0].profileImage || "/assets/person.png"} alt="profile-photo" className='profilePhoto' />
+                    <img src={otherMember[0]?.profileImage || "/assets/person.png"} alt="profile-photo" className='profilePhoto' />
                 )}
 
                 <div className='flex flex-col gap-1'>
